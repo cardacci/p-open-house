@@ -1,50 +1,52 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Calendar from './components/Calendar';
+import ErrorMessage from './components/ErrorMessage';
 import Spinner from './components/Spinner';
-
-const MOCK_API_RESPONSE = {
-  id: '1235',
-  address: '123 Main St',
-  city: 'New York City',
-  state: 'NY',
-  zipCode: '10001',
-  price: 1000000,
-  bedrooms: 2,
-  bathrooms: 1.5,
-  isSaved: true,
-  isFavorited: true,
-  openHouses: [
-    {
-      date: '2024-6-01',
-      time: '10:00 AM',
-    },
-    {
-      date: '2024-6-02',
-      time: '11:00 AM',
-    },
-    {
-      date: '2024-7-03',
-      time: '12:00 PM',
-    },
-  ],
-};
+import {fetchSavedListings, fetchListingDetail} from './utils/api';
 
 const App = () => {
+  const [error, setError] = useState(null);
+  const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
+  const loadListing = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const savedListings = await fetchSavedListings();
+      const favoritedListing = savedListings.find((item) => item.isFavorited);
+
+      if (!favoritedListing) {
+        setError('No favorited listings found.');
+        return;
+      }
+
+      const listingDetail = await fetchListingDetail(favoritedListing.id);
+      setListing(listingDetail);
+    } catch (err) {
+      console.error(err);
+      setError('Something went wrong. Please try again.');
+    } finally {
       setLoading(false);
-    }, 1000); // Simulate loading time
+    }
   }, []);
+
+  useEffect(() => {
+    loadListing();
+  }, [loadListing]);
 
   if (loading) {
     return <Spinner />;
   }
 
+  if (error) {
+    return <ErrorMessage message={error} onRetry={loadListing} />;
+  }
+
   return (
     <div className="calendar-container">
-      <Calendar availableTourDays={MOCK_API_RESPONSE.openHouses} />
+      <Calendar availableTourDays={listing.openHouses ?? []} />
     </div>
   );
 };

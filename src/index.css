@@ -140,6 +140,37 @@ body {
   z-index: 10;
 }
 
+/* Error State Styles */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 1.1em;
+  margin: 0;
+}
+
+.retry-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.retry-button:hover {
+  background-color: #357ae8;
+}
+
 /* Spinner Styles */
 .spinner {
   display: flex;

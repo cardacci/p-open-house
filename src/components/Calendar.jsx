@@ -43,12 +43,14 @@ const Calendar = ({availableTourDays}) => {
         </button>
       </div>
       <div className="calendar">
-        {days.map((day, index) => (
+        {days.map((day, index) => day.date ? (
           <CalendarDay
             key={index}
             day={day}
             onClick={() => handleDayClick(day)}
           />
+        ) : (
+          <div key={index} className="day empty"></div>
         ))}
       </div>
       {modalData && <EventModal data={modalData} onClose={handleCloseModal} />}
