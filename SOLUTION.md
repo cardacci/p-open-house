@@ -2,6 +2,7 @@
 
 ### 0. Repository created
 
+- The full history is public at https://github.com/cardacci/p-open-house. The `v0` tag marks the project exactly as I received it.
 - Aiming for clear iteration on the project and its features, to help prevent big mistakes.
 - Every commit was made using AI: I asked it to commit directly to the main branch and write the commit message itself.
 - In a real production environment, there would be more branches, like a development one.
@@ -9,7 +10,7 @@
 ### 1. Fixing existing bugs
 
 - Documented some functions for better understanding, for other engineers or even myself in the future.
-- Avoided rendering non-existing days, instead, just rendered an empty day element.
+- Avoided rendering non-existing days and rendered an empty day element instead.
 
 ### 2. Connecting to the API and removing the mock data
 
@@ -17,18 +18,24 @@
 - Added a landing page (`ListingsPage`) that lists the saved listings and lets the user click one to see its calendar (`ListingCalendar`), with a back button to return to the list.
 - `App` now only orchestrates which view is shown (`ListingsPage` or `ListingCalendar`), based on whether a listing is selected. Each view owns its own fetching, loading and error state. Calendar remains a pure presentational component that just receives the tour days as a prop.
 
-### 3. Updating Tour Details
+### 3. Matching the Compass look and feel
+
+- Took the design values from compass.com itself instead of eyeballing them: the real Compass Sans and Compass Serif, black as the primary color, pill-shaped buttons and flat listing cards.
+
+### 4. Updating Tour Details
+
 - The Tour Details modal looked bad, it was just dumping the raw tour data with `JSON.stringify`. Rebuilt it after a real compass.com listing page's own "Request a Tour" modal: a header with a title and a close (`x`) button separated by a divider, the date written out in full instead of `Date: ...`, and a full-width black pill button at the bottom.
 
-### 4. Responsive design
+### 5. Responsive design
+
 - Used AI to review every view (listings, calendar, modal) and make them responsive for mobile: added the missing viewport meta tag, gave the modal a bounded width so it doesn't overflow small screens, and added a media query that shrinks spacing, font sizes and the listings grid down to a single column below 600px.
 
-### 5. Testing
+### 6. Testing
 
 - The project has no test runner, and the instructions rule out adding packages or scripts, so I tested by hand in the browser: the listings page, the calendar, the modal, and the error and retry paths by forcing the API to fail.
 - Fixed an off-by-one on every open house date. The API returns dates like "2026-07-04", and reading that string with `new Date()` treats it as midnight UTC, so anyone behind UTC saw the tour a day earlier than it really was. Every listing is in New York, so it affected the whole audience. Dates are now built from their year, month and day parts and stay on the right calendar day. Checked in New York, Buenos Aires and Auckland.
 - Added the weekday initials above the grid. Without them there is no way to tell which column a day falls on.
-- The blank cells before the first of the month were growing and changing colour on hover, as if they could be clicked. The hover is now limited to real days.
+- The blank cells before the first of the month were growing and changing color on hover, as if they could be clicked. The hover is now limited to real days.
 - Removed the `.tooltip` rule from the stylesheet, nothing in the app used it.
 
 ## Decisions
@@ -39,7 +46,7 @@
 
 ### Project Structure
 - Static files live under `src/assets`, split into `fonts` and `images`, so there is one obvious place to look for them and room to grow by type instead of a single flat folder.
-- HTTP status codes live in `src/constants/httpStatus.js` instead of being written inline where they are checked.
+- Fixed values live in `src/constants`, one file per topic (`httpStatus.js`, `calendar.js`), instead of being written inline where they are used.
 
 ### React
 - Used `useCallback` to wrap the fetch function (`loadListing`) so the same function reference is kept across re-renders. This lets `useEffect` depend on it safely without re-running on every render, and lets the same function be reused as the retry button's `onClick` handler without recreating it each time.
@@ -56,3 +63,16 @@
 ## AI
 - Claude Code: Sonnet model. It's good for most tasks and consumes fewer tokens than Opus or Fable models.
 - I always encourage creating skills for AI models: AGENTS.md for general-purpose guidance and SKILL.md for specific ones. I created a base one from my own experience and added it to this project. I like keeping files organized so developers can write code and get to the right section quickly.
+- I used it as a pair, not as a generator: I decided what to build and why, asked it to write the code, and reviewed and corrected what came back. Every commit is in the repository linked at the top if you want to follow how it grew.
+
+### Key prompts
+
+- Connect to the real API with native fetch and try/catch, add an Error component, and retry when the endpoint fails.
+- A message like "Request to /api/saved-listings/10000 failed with status 500" only helps a developer. Log that to the console and show the user something friendlier.
+- If no listing is favorited, don't treat it as an error, just show all of them.
+- Add a constants file, for example for `HTTP_STATUS_NOT_FOUND`. Make it a scalable solution.
+- Look through `index.css` for repeated values worth turning into variables.
+- Review every view and make them responsive for mobile.
+- Scrape compass.com and take its real design values instead of guessing.
+- The Tour Details modal looks bad. Check it against Compass's own "Request a Tour" modal, and put the times in a selector so the user can pick one.
+- The slots run every half hour, so "4PM-6PM" should offer 4:00, 4:30, 5:00 and 5:30 PM.
