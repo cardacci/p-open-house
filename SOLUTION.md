@@ -31,6 +31,7 @@
 ### CSS
 - Renamed the `calendar-container` CSS class to `page-container`. It used to wrap only the calendar, but now it also wraps the listings page, so the old name no longer described what it holds. Naming things after what they actually contain matters for readability, especially as the app grows.
 - Abstracted repeated values in `index.css` (colors, border-radius, shadows, spacing, transitions) into CSS custom properties under `:root`, instead of leaving the same literal values copy-pasted across rules. If the project used a tool or library (Sass, a CSS-in-JS solution, Tailwind's config, a design tokens package, etc.), these would probably live somewhere else (a theme file, a config object), but with plain CSS, `:root` custom properties are the natural way to do this.
+- Used AI to review every view (listings, calendar, modal) and make them responsive for mobile: added the missing viewport meta tag, gave the modal a bounded width so it doesn't overflow small screens, and added a media query that shrinks spacing, font sizes and the listings grid down to a single column below 600px.
 
 ## AI
 - Claude Code: Sonnet model. It's good for most tasks and consumes fewer tokens than Opus or Fable models.
