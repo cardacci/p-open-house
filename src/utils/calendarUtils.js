@@ -1,5 +1,44 @@
+const CLOCK_AM = 'AM';
+const CLOCK_PM = 'PM';
+
 export const getMonthYearString = (date) => {
   return date.toLocaleString('default', {month: 'long', year: 'numeric'});
+};
+
+const getHourFromToken = (token) => {
+  const [, hourString, meridiem] = token.match(/^(\d{1,2})(AM|PM)$/);
+  const hour = Number(hourString);
+
+  if (meridiem === CLOCK_AM) {
+    return hour === 12 ? 0 : hour;
+  }
+
+  return hour === 12 ? 12 : hour + 12;
+};
+
+const formatTimeSlot = (hour, minutes) => {
+  const meridiem = hour < 12 ? CLOCK_AM : CLOCK_PM;
+  const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+
+  return `${displayHour}:${String(minutes).padStart(2, '0')} ${meridiem}`;
+};
+
+/**
+ * Splits a tour window like "4PM-6PM" into the 30-minute slots a visitor can actually book, e.g. "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM".
+ * @param {string} timeRange A tour window in the "<start><AM|PM>-<end><AM|PM>" format.
+ * @returns {Array} The available 30-minute time slots within that window.
+ */
+export const getTimeSlots = (timeRange) => {
+  const [startToken, endToken] = timeRange.split('-');
+  const startHour = getHourFromToken(startToken);
+  const endHour = getHourFromToken(endToken);
+  const slots = [];
+
+  for (let halfHour = startHour * 2; halfHour < endHour * 2; halfHour++) {
+    slots.push(formatTimeSlot(Math.floor(halfHour / 2), halfHour % 2 === 0 ? 0 : 30));
+  }
+
+  return slots;
 };
 
 /**

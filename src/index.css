@@ -1,13 +1,66 @@
+@font-face {
+  font-display: fallback;
+  font-family: 'Compass Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/CompassSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: fallback;
+  font-family: 'Compass Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url('./fonts/CompassSans-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: fallback;
+  font-family: 'Compass Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/CompassSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: fallback;
+  font-family: 'Compass Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/CompassSerif-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: fallback;
+  font-family: 'Compass Serif';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/CompassSerif-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: fallback;
+  font-family: 'Compass Serif';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/CompassSerif-Bold.woff2') format('woff2');
+}
+
 :root {
-  --color-primary: #4285f4;
-  --color-primary-hover: #357ae8;
-  --color-white: #fff;
-  --color-text-primary: #202124;
-  --color-text-secondary: #5f6368;
+  --color-available: #0049a8;
   --color-border: #dadce0;
+  --color-primary-hover: #333;
+  --color-primary: #000;
+  --color-text-primary: #171717;
+  --color-text-secondary: #5f6368;
+  --color-white: #fff;
+
+  --font-sans: 'Compass Sans', Helvetica, Arial, sans-serif;
+  --font-serif: 'Compass Serif', Times, 'Times New Roman', serif;
 
   --radius-sm: 4px;
   --radius-md: 8px;
+  --radius-pill: 9999px;
 
   --spacing-md: 20px;
   --spacing-lg: 16px;
@@ -21,12 +74,15 @@
 }
 
 body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
   background-color: #f5f5f5;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-sans);
   margin: 0;
   min-height: 100vh;
   padding: var(--spacing-page);
+  text-rendering: optimizeLegibility;
 }
 
 .page-container {
@@ -70,7 +126,7 @@ body {
 }
 
 .nav-button:focus {
-  box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.3);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.15);
   outline: none;
 }
 
@@ -81,6 +137,7 @@ body {
 
 .month-year {
   color: var(--color-text-primary);
+  font-family: var(--font-serif);
   font-size: 1.8em;
   font-weight: bold;
 }
@@ -118,7 +175,7 @@ body {
 }
 
 .day.available {
-  background-color: #34a853;
+  background-color: var(--color-available);
   color: var(--color-white);
 }
 
@@ -143,7 +200,6 @@ body {
 /* Modal Styles */
 .modal {
   background-color: var(--color-white);
-  border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   box-sizing: border-box;
   left: 50%;
@@ -154,6 +210,78 @@ body {
   transform: translate(-50%, -50%);
   width: calc(100% - 40px);
   z-index: 11;
+}
+
+.modal-header {
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+}
+
+.modal-title {
+  color: var(--color-text-primary);
+  font-size: 1.2em;
+  font-weight: 700;
+  margin: 0;
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 1.5em;
+  line-height: 1;
+  padding: 0;
+}
+
+.modal-date {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  margin: 0 0 var(--spacing-lg);
+}
+
+.modal-times-label {
+  color: var(--color-text-secondary);
+  display: block;
+  font-size: 0.85em;
+  margin-bottom: 8px;
+}
+
+.modal-times-select {
+  background-color: var(--color-white);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  box-sizing: border-box;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 1em;
+  margin-bottom: var(--spacing-md);
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.modal-button {
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 12px var(--spacing-md);
+  transition: background-color var(--transition-fast);
+  width: 100%;
+}
+
+.modal-button-primary {
+  background-color: var(--color-primary);
+  border: none;
+  color: var(--color-white);
+}
+
+.modal-button-primary:hover {
+  background-color: var(--color-primary-hover);
 }
 
 .overlay {
@@ -169,6 +297,7 @@ body {
 /* Listings Page Styles */
 .listings-title {
   color: var(--color-text-primary);
+  font-family: var(--font-serif);
   font-size: 1.6em;
   font-weight: bold;
   margin: 0 0 var(--spacing-md);
@@ -203,16 +332,21 @@ body {
 }
 
 .listing-card {
-  border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   cursor: pointer;
   padding: var(--spacing-lg);
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast);
 }
 
 .listing-card:hover {
-  background-color: #f1f3f4;
-  transform: scale(1.02);
+  background-color: #fafafa;
+}
+
+.listing-card-price {
+  color: var(--color-text-primary);
+  font-size: 1.15em;
+  font-weight: 500;
+  margin: 0 0 8px;
 }
 
 .listing-card-address {
@@ -223,12 +357,6 @@ body {
 .listing-card-location {
   color: var(--color-text-secondary);
   font-size: 0.9em;
-  margin: 4px 0;
-}
-
-.listing-card-price {
-  color: var(--color-primary);
-  font-weight: bold;
   margin: 4px 0;
 }
 
@@ -265,12 +393,13 @@ body {
 
 .retry-button {
   background-color: var(--color-primary);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   border: none;
   color: var(--color-white);
   cursor: pointer;
   font-size: 1em;
-  padding: 10px var(--spacing-md);
+  font-weight: 500;
+  padding: 12px var(--spacing-md);
   transition: background-color var(--transition-fast);
 }
 

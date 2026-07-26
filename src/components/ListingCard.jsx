@@ -6,11 +6,11 @@ const ListingCard = ({listing, onClick}) => {
   /* ===== JSX Return ===== */
   return (
     <div className="listing-card" onClick={onClick}>
+      <div className="listing-card-price">${price.toLocaleString()}</div>
       <div className="listing-card-address">{address}</div>
       <div className="listing-card-location">
         {city}, {state} {zipCode}
       </div>
-      <div className="listing-card-price">${price.toLocaleString()}</div>
     </div>
   );
 };

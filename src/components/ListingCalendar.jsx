@@ -58,7 +58,7 @@ const ListingCalendar = ({listingId, onBack}) => {
   return (
     <>
       <button className="back-button" onClick={onBack}>
-        &larr; Back to listings
+        Back to listings
       </button>
       <Calendar availableTourDays={listing.openHouses ?? []} />
     </>
