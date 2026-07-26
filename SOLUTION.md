@@ -31,6 +31,10 @@
 - If no listing is favorited, the landing page shows all saved listings instead of an error. Not finding a favorite isn't really an error, it's just an empty state, so treating it as one would be misleading to the user.
 - The API only returns a two-hour tour window per day (e.g. "4PM-6PM"), but a real visit only takes 30 minutes, so the window gets split into 30-minute slots ("4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM") for the "Pick a time" select. The end of the window isn't offered as a slot since a tour starting exactly at closing time wouldn't make sense.
 
+### Project Structure
+- Static files live under `src/assets`, split into `fonts` and `images`, so there is one obvious place to look for them and room to grow by type instead of a single flat folder.
+- HTTP status codes live in `src/constants/httpStatus.js` instead of being written inline where they are checked.
+
 ### React
 - Used `useCallback` to wrap the fetch function (`loadListing`) so the same function reference is kept across re-renders. This lets `useEffect` depend on it safely without re-running on every render, and lets the same function be reused as the retry button's `onClick` handler without recreating it each time.
 
@@ -40,7 +44,7 @@
 ### CSS
 - Renamed the `calendar-container` CSS class to `page-container`. It used to wrap only the calendar, but now it also wraps the listings page, so the old name no longer described what it holds. Naming things after what they actually contain matters for readability, especially as the app grows.
 - Abstracted repeated values in `index.css` (colors, border-radius, shadows, spacing, transitions) into CSS custom properties under `:root`, instead of leaving the same literal values copy-pasted across rules. If the project used a tool or library (Sass, a CSS-in-JS solution, Tailwind's config, a design tokens package, etc.), these would probably live somewhere else (a theme file, a config object), but with plain CSS, `:root` custom properties are the natural way to do this.
-- Used the real Compass Sans and Compass Serif from compass.com, self-hosted under `src/fonts`. The typefaces belong to Compass and are included here only to make this exercise look right.
+- Used the real Compass Sans and Compass Serif from compass.com, self-hosted under `src/assets/fonts`. The typefaces belong to Compass and are included here only to make this exercise look right.
 - Asked AI to scrape compass.com and pull the main design values (colors, button and card styles) straight from the real site instead of guessing, then bring those values into this app: black as the primary color instead of blue, pill-shaped buttons, and flat listing cards without rounded corners.
 
 ## AI

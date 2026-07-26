@@ -3,7 +3,7 @@
   font-family: 'Compass Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('./fonts/CompassSans-Regular.woff2') format('woff2');
+  src: url('./assets/fonts/CompassSans-Regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-family: 'Compass Sans';
   font-style: normal;
   font-weight: 500;
-  src: url('./fonts/CompassSans-Medium.woff2') format('woff2');
+  src: url('./assets/fonts/CompassSans-Medium.woff2') format('woff2');
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-family: 'Compass Sans';
   font-style: normal;
   font-weight: 700;
-  src: url('./fonts/CompassSans-Bold.woff2') format('woff2');
+  src: url('./assets/fonts/CompassSans-Bold.woff2') format('woff2');
 }
 
 @font-face {
@@ -27,7 +27,7 @@
   font-family: 'Compass Serif';
   font-style: normal;
   font-weight: 400;
-  src: url('./fonts/CompassSerif-Regular.woff2') format('woff2');
+  src: url('./assets/fonts/CompassSerif-Regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -35,7 +35,7 @@
   font-family: 'Compass Serif';
   font-style: normal;
   font-weight: 600;
-  src: url('./fonts/CompassSerif-SemiBold.woff2') format('woff2');
+  src: url('./assets/fonts/CompassSerif-SemiBold.woff2') format('woff2');
 }
 
 @font-face {
@@ -43,7 +43,7 @@
   font-family: 'Compass Serif';
   font-style: normal;
   font-weight: 700;
-  src: url('./fonts/CompassSerif-Bold.woff2') format('woff2');
+  src: url('./assets/fonts/CompassSerif-Bold.woff2') format('woff2');
 }
 
 :root {
