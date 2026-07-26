@@ -4,6 +4,7 @@ import EventModal from './EventModal';
 import {getMonthYearString, generateCalendarDays} from '../utils/calendarUtils';
 
 const Calendar = ({availableTourDays}) => {
+  /* ===== State ===== */
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalData, setModalData] = useState(null);
 
@@ -31,6 +32,7 @@ const Calendar = ({availableTourDays}) => {
 
   const days = generateCalendarDays(currentDate, availableTourDays);
 
+  /* ===== JSX Return ===== */
   return (
     <>
       <div className="header">

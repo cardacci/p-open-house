@@ -5,6 +5,7 @@ const CalendarDay = ({day, onClick}) => {
     day.tours?.length > 0 ? ' available' : ''
   }`;
 
+  /* ===== JSX Return ===== */
   return (
     <div className={dayClassName} onClick={onClick}>
       {day.date.getDate()}

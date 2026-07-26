@@ -1,6 +1,7 @@
 import React from 'react';
 
 const EventModal = ({data, onClose}) => {
+  /* ===== JSX Return ===== */
   return (
     <>
       <div className="overlay" onClick={onClose}></div>
