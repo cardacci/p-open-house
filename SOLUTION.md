@@ -25,6 +25,12 @@
 
 ### 5. Testing
 
+- The project has no test runner, and the instructions rule out adding packages or scripts, so I tested by hand in the browser: the listings page, the calendar, the modal, and the error and retry paths by forcing the API to fail.
+- Fixed an off-by-one on every open house date. The API returns dates like "2026-07-04", and reading that string with `new Date()` treats it as midnight UTC, so anyone behind UTC saw the tour a day earlier than it really was. Every listing is in New York, so it affected the whole audience. Dates are now built from their year, month and day parts and stay on the right calendar day. Checked in New York, Buenos Aires and Auckland.
+- Added the weekday initials above the grid. Without them there is no way to tell which column a day falls on.
+- The blank cells before the first of the month were growing and changing colour on hover, as if they could be clicked. The hover is now limited to real days.
+- Removed the `.tooltip` rule from the stylesheet, nothing in the app used it.
+
 ## Decisions
 
 ### Product

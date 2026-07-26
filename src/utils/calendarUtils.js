@@ -42,6 +42,18 @@ export const getTimeSlots = (timeRange) => {
 };
 
 /**
+ * Reads an API date ("2026-07-04") as that calendar day in local time.
+ * Passing the string straight to `new Date()` would read it as midnight UTC, which lands on the previous day for anyone behind UTC and shifts every open house one day earlier.
+ * @param {string} dateString A date in "YYYY-MM-DD" format.
+ * @returns {Date} The same calendar day, at local midnight.
+ */
+const parseApiDate = (dateString) => {
+  const [year, month, day] = dateString.split('-').map(Number);
+
+  return new Date(year, month - 1, day);
+};
+
+/**
  * Generates an array of days for the calendar view based on the current date and available tour days.
  * @param {Date} date The current date.
  * @param {Array} availableTourDays An array of available tour days.
@@ -67,7 +79,7 @@ export const generateCalendarDays = (date, availableTourDays) => {
     const dayDate = new Date(year, month, day);
     const isToday = dayDate.toDateString() === new Date().toDateString();
     const tours = availableTourDays.filter(
-      (tour) => new Date(tour.date).toDateString() === dayDate.toDateString()
+      (tour) => parseApiDate(tour.date).toDateString() === dayDate.toDateString()
     );
 
     days.push({

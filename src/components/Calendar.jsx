@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import CalendarDay from './CalendarDay';
 import EventModal from './EventModal';
+import {WEEKDAYS} from '../constants/calendar';
 import {getMonthYearString, generateCalendarDays} from '../utils/calendarUtils';
 
 const Calendar = ({availableTourDays}) => {
@@ -45,6 +46,11 @@ const Calendar = ({availableTourDays}) => {
         </button>
       </div>
       <div className="calendar">
+        {WEEKDAYS.map((weekday) => (
+          <abbr className="weekday" key={weekday} title={weekday}>
+            {weekday.charAt(0)}
+          </abbr>
+        ))}
         {days.map((day, index) => day.date ? (
           <CalendarDay
             key={index}
